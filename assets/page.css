@@ -1,0 +1,98 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/*body*/.page {
+  --module-sm: 0.75rem;
+  --module-md: 1.5rem;
+  --module-lg: 3rem;
+
+  background: #404;
+  color: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, Sans-serif;
+  font-size: 1.25rem;
+  font-weight: 200;
+  line-height: var(--module-md);
+}
+
+p, blockquote, ul, ol, h1, h2, h3, h4 {
+  margin: 0 0 var(--module-md);
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 200;
+  line-height: var(--module-lg);
+}
+
+h2 { 
+  font-size: 1.5rem; 
+  font-weight: 200;
+  line-height: var(--module-lg);
+}
+
+a {
+  color: #fdd;
+}
+
+#canvas {
+  display: block;
+   
+  margin: 0 auto;
+}
+
+/* Components =================================================== */
+
+.subhead {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.list li {
+  margin: 0 0 var(--module-md);
+}
+
+.list a {
+  display: flex;
+}
+
+.list span {
+  margin-right: 0.5rem;
+  padding-right: 0.5rem;
+  border-right: 1px solid currentColor;
+}
+
+.list--sketches {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.list--sketches > li {
+  font-size: 1.5rem;
+}
+
+.list--sketches a {
+  text-decoration: none;
+}
+
+/* Page-specific styles ========================================= */
+
+.page--index {
+  background-image: repeating-linear-gradient(
+    rgba(0 0 0 / 0.2) 0,
+    rgba(0 0 0 / 0.2) 1px,
+    transparent 2px,
+    transparent 1.5rem
+  );
+  padding: var(--module-lg);
+}
+
+
+/* Debugging ==================================================== */
+
+.debug *,
+.debug *::before,
+.debug *::after {
+  outline: 2px solid rgb(0 50 240 / 0.5);
+}

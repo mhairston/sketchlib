@@ -20,15 +20,11 @@
 
  * ====================================================== */
 
-const palettes = { 
+export const palettes = { 
   default: {
     background: '#404',
     primary: '#909',
     secondary: '#070',
     tertiary: '#',
   }
-};
-
-export { 
-  palettes
 };

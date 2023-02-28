@@ -42,16 +42,9 @@ function polar(angle, mag) {
   }
 }
 
-export default {
-  PI,
-  TAU,
-  drawCircle,
-  polar
-};
-
 export {
   PI,
   TAU,
-  drawCircle,
-  polar
+  polar,
+  drawCircle
 };

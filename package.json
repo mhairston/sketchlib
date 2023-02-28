@@ -1,10 +1,14 @@
 {
   "name": "sketchlib",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Functions for working with HTML canvas",
   "main": "main.js",
   "repository": "https://github.com/mhairston/sketchlib",
   "author": "Michael Hairston",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "chance": "^1.1.10",
+    "tinycolor2": "^1.6.0"
+  }
 }

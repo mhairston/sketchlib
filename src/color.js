@@ -25,6 +25,27 @@ export const palettes = {
     background: '#404',
     primary: '#909',
     secondary: '#070',
-    tertiary: '#',
+    tertiary: '#6c6',
+  },
+
+  darkSlush: {
+    background: '#000000',
+    primary: '#0F6292',
+    secondary: '#16FF00',
+    tertiary: '#FFED00'
+  },
+
+  warmier: {
+    background: '#400E32',
+    primary: '#A61F69',
+    secondary: '#F2921D',
+    tertiary: '#F2CD5C'
+  },
+
+  brightWinter: {
+    background: '#FC7300',
+    primary: '#BFDB38',
+    secondary: '#1F8A70',
+    tertiary: '#00425A'
   }
 };

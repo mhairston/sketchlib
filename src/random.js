@@ -114,7 +114,7 @@ function choose(collection) {
  * @return {Number} - the resulting pseudorandom number.
  */
 function coin(threshhold = 0.5) {
-  return rr(0, 1) < threshold;
+  return rr(0, 1) < threshhold;
 }
 
 /**

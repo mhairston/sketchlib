@@ -9,9 +9,9 @@
 
 import { qs, qsa, whenReady } from './src/utils.js';
 import { prepareSketch, drawBackground} from './src/canvas.js';
-import { PI, TAU, drawCircle, polar } from './src/geo.js';
+import { PI, TAU, radians, drawCircle, polar } from './src/geo.js';
 import { palettes } from './src/color.js';
-import { timing } from './src/time.js';
+import { timing, cycle } from './src/time.js';
 import { 
   setSeed,
   rr,
@@ -32,11 +32,13 @@ export default {
   prepareSketch, 
   drawBackground,
   PI, 
-  TAU, 
+  TAU,
+  radians,
   polar, 
   drawCircle,
   palettes,
   timing,
+  cycle,
   setSeed,
   rr,
   rri,

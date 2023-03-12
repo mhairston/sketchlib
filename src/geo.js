@@ -12,6 +12,16 @@ const PI = Math.PI;
 /** @type {number} */
 const TAU = PI * 2;
 
+
+/**
+ * Convert degrees to radians
+ * @param {number} degrees - value to convert
+ * @return {number}
+ */
+function radians(degrees) {
+  return degrees / 360 * TAU;
+}
+
 /**
  * drawCircle
  * 
@@ -45,6 +55,7 @@ function polar(angle, mag) {
 export {
   PI,
   TAU,
+  radians,
   polar,
   drawCircle
 };

@@ -136,11 +136,21 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
    * @param {number} fraction Vertical position, where 0 is the top of
    *    the frame and 1 is the bottom.
    */
-  Frame.prototype.hLine = function(fraction) {
-    this.ctx.line(
-      this.x, this.pointY(fraction),
-      this.endPoint().x, this.pointY(fraction)
-    );
+  Frame.prototype.hLine = function(fraction = 0.5, wobble = 0) {
+    let x1 = this.x;
+    let y1 = this.pointY(fraction);
+    let x2 = this.endPoint().x;
+    let y2 = y1;
+    if (wobble) {
+      x1 += rb(wobble);
+      y1 += rb(wobble);
+      x2 += rb(wobble);
+      y2 += rb(wobble);
+    }
+    this.ctx.beginPath();
+    this.ctx.moveTo(x1, y1);
+    this.ctx.lineTo(x2, y2);
+    this.ctx.stroke();
   };
 
   /**
@@ -150,11 +160,21 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
    * @param {number} fraction Vertical position, where 0 is the top of
    *    the frame and 1 is the bottom.
    */
-  Frame.prototype.vLine = function(fraction) {
-    this.ctx.line(
-      this.pointX(fraction), this.y,
-      this.pointX(fraction), this.endPoint().y
-    );
+  Frame.prototype.vLine = function(fraction = 0.5, wobble = 0) {
+    let x1 = this.pointX(fraction);
+    let y1 = this.y;
+    let x2 = this.pointX(fraction);
+    let y2 = this.endPoint().y;
+    if (wobble) {
+      x1 += rb(wobble);
+      y1 += rb(wobble);
+      x2 += rb(wobble);
+      y2 += rb(wobble);
+    }
+    this.ctx.beginPath();
+    this.ctx.moveTo(x1, y1);
+    this.ctx.lineTo(x2, y2);
+    this.ctx.stroke();
   };
 
   /**
@@ -162,9 +182,9 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
    *
    */
   Frame.prototype.rect = function () {
-    this.ctx.save();
+    this.ctx.beginPath();
     this.ctx.rect(this.x, this.y, this.width, this.height);
-    this.ctx.restore();
+    this.ctx.stroke();
   };
 
   /**

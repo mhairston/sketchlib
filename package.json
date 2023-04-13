@@ -11,5 +11,8 @@
     "@sunify/lerp-color": "^2.0.0",
     "chance": "^1.1.10",
     "tinycolor2": "^1.6.0"
+  },
+  "devDependencies": {
+    "rollup": "^3.20.2"
   }
 }

@@ -1,3 +1,6 @@
+import '../node_modules/tinycolor2/esm/tinycolor.js';
+
+
 /* ====================================================== *
 
    sketchlib - color
@@ -19,6 +22,14 @@
      - Can output an object with hex colors for portability
 
  * ====================================================== */
+
+export const tint = function(col, amt) {
+  return tinycolor(col).lighten(amt).toHexString();
+};
+
+export const shade = function(col, amt) {
+  return tinycolor(col).darken(amt).toHexString();
+};
 
 export const palettes = { 
   default: {

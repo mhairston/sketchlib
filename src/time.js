@@ -47,4 +47,12 @@ function cycle(freq = 1, phase = 0, mul = 1, add = 0) {
   return Math.sin(elapsed * freq + phase) * mul + add;
 }
 
-export { timing, cycle };
+function times(repeats = 3, callback) {
+  for(let i = 0; i < repeats; i++) {
+    callback();
+  }
+}
+
+
+
+export { timing, cycle, times };

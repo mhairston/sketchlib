@@ -56,18 +56,12 @@ function initSketch(sketch) {
   sketch.ctx.lineCap = 'round';
 }
 
-function drawBackground(sketch) {
-  const ctx = sketch.ctx;
-  if (sketch.pal?.background) {
-    ctx.save();
-    ctx.strokeStyle = 'none';
-    ctx.fillStyle = sketch.pal.background;
-    ctx.fillRect(0, 0, sketch.canvasWidth, sketch.canvasHeight);
-    ctx.restore();
-    if (sketch.matchBackground) {
-      document.body.style.backgroundColor = sketch.pal.background;
-    }
-  }
+function drawBackground(ctx, col) {
+  ctx.save();
+  ctx.strokeStyle = 'none';
+  ctx.fillStyle = col;
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.restore();
 }
 
 function prepareSketch(options) {

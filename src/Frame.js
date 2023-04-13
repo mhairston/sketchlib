@@ -26,7 +26,6 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
     if (x === undefined) {
       this.x = 0;
       this.y = 0;
-      debugger;
       this.width = ctx.canvas.width;
       this.height = ctx.canvas.height;
     } else {

@@ -35,7 +35,8 @@ function rr(min, max) {
     max = min;
     min = 0;
   }
-  return (_randomFloat() * (max - min)) + min;
+  const num = (_randomFloat() * (max - min)) + min;
+  return num;
 }
 
 /**

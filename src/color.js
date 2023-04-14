@@ -1,5 +1,4 @@
-import '../node_modules/tinycolor2/esm/tinycolor.js';
-
+import tinycolor from 'tinycolor2';
 
 /* ====================================================== *
 

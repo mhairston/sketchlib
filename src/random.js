@@ -6,9 +6,9 @@
 
  * ====================================================== */
 
-import '../node_modules/chance/dist/chance.min.js';
+import Chance from 'chance';
 
-let _chance = new Chance(0);
+let _chance = Chance();
 
 // TODO: test this.
 function setSeed(seed) {

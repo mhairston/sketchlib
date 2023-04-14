@@ -7,12 +7,12 @@
 
  * ====================================================== */
 
-import { qs, qsa, whenReady } from './src/utils.js';
-import { prepareSketch, drawBackground} from './src/canvas.js';
-import { PI, TAU, radians, drawCircle, polar } from './src/geo.js';
-import { createFrame } from './src/Frame.js';
-import { tint, shade, palettes } from './src/color.js';
-import { timing, cycle, times } from './src/time.js';
+import { qs, qsa, whenReady } from './utils.js';
+import { prepareSketch, drawBackground} from './canvas.js';
+import { PI, TAU, radians, drawCircle, polar } from './geo.js';
+import { createFrame } from './Frame.js';
+import { tint, shade, palettes } from './color.js';
+import { timing, cycle, times } from './time.js';
 import { 
   setSeed,
   rr,
@@ -24,7 +24,7 @@ import {
   coin,
   wobble,
   shuffle
-} from './src/random.js';
+} from './random.js';
 
 export default {
   qs,

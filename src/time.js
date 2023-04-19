@@ -49,7 +49,7 @@ function cycle(freq = 1, phase = 0, mul = 1, add = 0) {
 
 function times(repeats = 3, callback) {
   for(let i = 0; i < repeats; i++) {
-    callback();
+    callback.bind(null, i).call();
   }
 }
 

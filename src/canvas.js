@@ -8,7 +8,7 @@
 
 /**
  * init - create canvas and set some defaults
- * 
+ *
  * @param {Object} options
  * @param {string} options.title - sketch title, used for document title
  *                                 and base filename for snapshots
@@ -39,6 +39,8 @@ function createSketch(options) {
     canvas: canvas,
     canvasWidth: w,
     canvasHeight: h,
+    cw: w,
+    ch: h,
     hw: w * 0.5,
     hh: h * 0.5,
     pal: options.pal,

@@ -34,6 +34,7 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
       this.width = frameWidth;
       this.height = frameHeight;
     }
+    this._pointWobble = 0;
   }
 
   // static methods:
@@ -75,6 +76,7 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
       rr(minSize, maxSize),rr(minSize, maxSize));
   }
 
+
   // instance methods:
   Frame.prototype.rx = function() {
     return this.x + rr(this.width);
@@ -82,6 +84,14 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
 
   Frame.prototype.ry = function() {
     return this.y + rr(this.height);
+  }
+
+  Frame.prototype.setPointWobble = function(wob) {
+    this._pointWobble = wob;
+  }
+
+  Frame.prototype.getPointWobble = function() {
+    return this._pointWobble;
   }
 
   /**
@@ -126,6 +136,30 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
    */
   Frame.prototype.pointY = function(fraction) {
     return this.y + (this.height * fraction);
+  };
+
+  /**
+   * Returns a point along the x-axis of the frame, with optional wobble.
+   *
+   * @param {number} fraction Horizontal position, where 0 is the left edge
+   * of the frame and 1 is the right edge.
+   * @returns {number} Absolute x-coordinate on canvas.
+   */
+  Frame.prototype.px = function(fraction) {
+    return this.x + (this.width * fraction) + rb(this._pointWobble);
+    //return this.x + (this.width * (rb(this._pointWobble) * fraction));
+  };
+
+  /**
+   * Returns a point along the y-axis of the frame, with optional wobble.
+   *
+   * @param {number} fraction Vertical position, where 0 is the top of
+   *    the frame and 1 is the bottom.
+   * @returns {number} Absolute y-coordinate on canvas.
+   */
+  Frame.prototype.py = function(fraction) {
+    return this.y + (this.height * fraction) + rb(this._pointWobble);
+    //return this.y + (this.height * (rb(this._pointWobble) * fraction));
   };
 
   /**
@@ -196,6 +230,26 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
   };
 
   /**
+   * Draws the frame on any background.
+   *
+   */
+  Frame.prototype.debug = function () {
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.globalAlpha = 1;
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#000';
+    ctx.rect(this.x, this.y, this.width, this.height);
+    ctx.stroke();
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#fff';
+    ctx.rect(this.x, this.y, this.width, this.height);
+    ctx.stroke();
+    ctx.restore();
+  };
+
+  /**
    * Returns the Frame's ratio of width to height.
    *
    */
@@ -263,7 +317,7 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
    * @returns {object} A new frame, offset from the one passed in.
    */
   Frame.prototype.wobble = function(maxOffset) {
-    return new Frame(this.ctx, 
+    return new Frame(this.ctx,
       this.x + rb(maxOffset), this.y + rb(maxOffset),
       this.width, this.height
     )
@@ -340,7 +394,7 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
       row = [];
       for(j = 0; j < columns; j++) {
         row.push(
-          new Frame(this.ctx, 
+          new Frame(this.ctx,
             this.x + (j * moduleWidth),
             this.y + (i * moduleHeight),
             moduleWidth,

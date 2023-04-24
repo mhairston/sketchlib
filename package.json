@@ -1,6 +1,6 @@
 {
   "name": "sketchlib",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Functions for working with HTML canvas",
   "main": "dist/sketchlib.js",
   "type": "module",
@@ -17,6 +17,7 @@
     "tinycolor2": "^1.6.0"
   },
   "scripts": {
-    "build": "rollup --config"
+    "build": "rollup --config",
+    "watch": "rollup -cw"
   }
 }

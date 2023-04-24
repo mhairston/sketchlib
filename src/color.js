@@ -8,11 +8,11 @@ import tinycolor from 'tinycolor2';
 
    TODO:
 
-   - A façade for tinycolor2 and a 
+   - A façade for tinycolor2 and a
      wrapper object for that color format
    - An opinionated, standard palette format:
      - HSB; alpha is NOT included in color definitions.
-     - Each color has hue, saturation, and a default 
+     - Each color has hue, saturation, and a default
        brightness.
      - Specific color roles like background, primary,
        secondary.
@@ -30,7 +30,7 @@ export const shade = function(col, amt) {
   return tinycolor(col).darken(amt).toHexString();
 };
 
-export const palettes = { 
+export const palettes = {
   default: {
     background: '#404',
     primary: '#909',
@@ -135,5 +135,40 @@ export const palettes = {
     secondary: '#6C5B7B',
     tertiary: '#355C7D'
   },
+
+  armyJeep: {
+    background: '#61764B',
+    primary: '#9BA17B',
+    secondary: '#CFB997',
+    tertiary: '#CFB997'
+  },
+
+  safetyThird: {
+    background: '#F97B22',
+    primary: '#FEE8B0',
+    secondary: '#9CA777',
+    tertiary: '#FAD6A5'
+  },
+
+  coolNeutral: {
+    background: '#A6D0DD',
+    primary: '#FF6969',
+    secondary: '#FFD3B0',
+    tertiary: '#FFF9DE'
+  },
+
+  altCrayola: {
+    background: '#89375F',
+    primary: '#CE5959',
+    secondary: '#BACDDB',
+    tertiary: '#F3E8FF'
+  },
+
+  icicle: {
+    background: '#453C67',
+    primary: '#6D67E4',
+    secondary: '#46C2CB',
+    tertiary: '#F2F7A1'
+  }
 };
 

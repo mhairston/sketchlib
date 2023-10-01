@@ -1,3 +1,5 @@
+import { rawTime } from './utils.js';
+
 /* ====================================================== *
 
    sketchlib - canvas
@@ -44,9 +46,14 @@ function createSketch(options) {
     hw: w * 0.5,
     hh: h * 0.5,
     pal: options.pal,
+    seed: options.seed,
+    setup: options.setup,
+    draw: options.draw,
+    reset: options.reset,
     frameRate: options.frameRate,
     origFrameRate: options.frameRate,
-    matchBackground: options.matchBackground
+    matchBackground: options.matchBackground,
+    config: options.config
   };
 }
 
@@ -72,9 +79,29 @@ function prepareSketch(options) {
   return sketch;
 }
 
+function saveImage(sk) {
+  var filename = sk.title + ' [' + sk.seed + '] ' + rawTime();
+  console.log('Saving: ' + filename + '.png');
+
+  // Save canvas code taken from
+  // https://www.digitalocean.com/community/tutorials/js-canvas-toblob
+  sk.canvas.toBlob(
+    blob => {
+      const anchor = document.createElement('a');
+      anchor.download = `${filename}.png`; // optional, but you can give the file a name
+      anchor.href = URL.createObjectURL(blob);
+      anchor.click(); // ✨ magic!
+
+      URL.revokeObjectURL(anchor.href); // remove it from memory and save on memory! 😎
+    },
+    'image/png'
+  );
+}
+
 export {
   createSketch,
   initSketch,
   prepareSketch,
-  drawBackground
+  drawBackground,
+  saveImage
 }

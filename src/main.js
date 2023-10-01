@@ -2,18 +2,33 @@
 
    sketchlib
 
-   Drawing functions and utilities for working with 
+   Drawing functions and utilities for working with
    HTML canvas
 
  * ====================================================== */
 
-import { qs, qsa, whenReady } from './utils.js';
-import { prepareSketch, drawBackground} from './canvas.js';
+import { prepareSketch, drawBackground, saveImage } from './canvas.js';
 import { PI, TAU, radians, drawCircle, polar } from './geo.js';
 import { createFrame } from './Frame.js';
+import { processPath } from './path.js';
+import { createPolygon } from './Polygon.js';
 import { tint, shade, palettes } from './color.js';
 import { timing, cycle, times } from './time.js';
-import { 
+import { grid } from './grid.js';
+
+import {
+  qs,
+  qsa,
+  whenReady,
+  sum,
+  constrain,
+  constrainWrap,
+  rawTime,
+  padNum,
+  chooseKey,
+} from './utils.js';
+
+import {
   setSeed,
   rr,
   rri,
@@ -28,23 +43,34 @@ import {
 
 export default {
   qs,
-  qsa, 
+  qsa,
   whenReady,
-  prepareSketch, 
+  prepareSketch,
+  saveImage,
   drawBackground,
-  PI, 
+  PI,
   TAU,
   radians,
-  polar, 
+  polar,
   drawCircle,
   createFrame,
+  processPath,
+  createPolygon,
   tint,
   shade,
   palettes,
   timing,
   cycle,
+  grid,
   times,
   setSeed,
+  rawTime,
+  sum,
+  constrain,
+  constrainWrap,
+  rawTime,
+  padNum,
+  chooseKey,
   rr,
   rri,
   rrq,

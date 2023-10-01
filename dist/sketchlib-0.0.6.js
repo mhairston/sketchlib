@@ -1,14 +1,14 @@
 /* ====================================================== *
 
-   sketchlib - utils
+  sketchlib - utils
 
-   Misc. utility functions
+  Misc. utility functions
 
  * ====================================================== */
 
 /**
  * qs - shortcut wrapper for element.querySelector
- * 
+ *
  * @param {string} selector - what to look for, in CSS selector syntax
  * @param {HTMLElement} scope - the top element of the DOM subtree to search
  * @return {HTMLElement|null}
@@ -20,7 +20,7 @@ function qs(selector, scope) {
 
 /**
  * qs - shortcut wrapper for element.querySelectorAll
- * 
+ *
  * @param {string} selector - what to look for, in CSS selector syntax
  * @param {HTMLElement} scope - the top element of the DOM subtree to search
  * @return {NodeList}
@@ -37,7 +37,46 @@ function qsa(selector, scope) {
  * @param callback - function to run on DOMContentLoaded event.
  */
 function whenReady(callback) {
-   window.addEventListener('DOMContentLoaded', callback);
+  window.addEventListener('DOMContentLoaded', callback);
+}
+
+function sum(list) {
+  let sum = 0;
+  list.forEach((val) => {
+    if (typeof val != 'number') {
+      throw(`List to be summed includes non-number '${val}'`);
+    } else {
+      sum += val;
+    }
+   });
+  return sum;
+}
+
+function constrain(val,min,max) {
+  if (val < min) {val = min;}
+  if (val > max) {val = max;}
+  return val;
+}
+
+function constrainWrap(val,min,max) {
+  if (val < min) {val = max;}
+  if (val > max) {val = min;}
+  return val;
+}
+
+function rawTime() {
+ var now = new Date();
+ return padNum(now.getHours(),2)
+  + padNum(now.getMinutes(),2)
+  + padNum(now.getSeconds(),2);
+}
+
+function padNum(num, places) {
+  return ("00000000000" + num).slice(0 - places);
+}
+
+function chooseKey(obj) {
+  return choose(Object.keys(obj));
 }
 
 /* ====================================================== *
@@ -86,9 +125,14 @@ function createSketch(options) {
     hw: w * 0.5,
     hh: h * 0.5,
     pal: options.pal,
+    seed: options.seed,
+    setup: options.setup,
+    draw: options.draw,
+    reset: options.reset,
     frameRate: options.frameRate,
     origFrameRate: options.frameRate,
-    matchBackground: options.matchBackground
+    matchBackground: options.matchBackground,
+    config: options.config
   };
 }
 
@@ -112,6 +156,25 @@ function prepareSketch(options) {
   const sketch = createSketch(options);
   initSketch(sketch);
   return sketch;
+}
+
+function saveImage(sk) {
+  var filename = sk.title + ' [' + sk.seed + '] ' + rawTime();
+  console.log('Saving: ' + filename + '.png');
+
+  // Save canvas code taken from
+  // https://www.digitalocean.com/community/tutorials/js-canvas-toblob
+  sk.canvas.toBlob(
+    blob => {
+      const anchor = document.createElement('a');
+      anchor.download = `${filename}.png`; // optional, but you can give the file a name
+      anchor.href = URL.createObjectURL(blob);
+      anchor.click(); // ✨ magic!
+
+      URL.revokeObjectURL(anchor.href); // remove it from memory and save on memory! 😎
+    },
+    'image/png'
+  );
 }
 
 /* ====================================================== *
@@ -140,10 +203,10 @@ function radians(degrees) {
 
 /**
  * drawCircle
- * 
+ *
  * Draw a circle using current fill/stroke/etc.
  * Unless part of a compound shape, be sure to wrap in beginShape/endShape.
- * 
+ *
  * @param {CanvasRenderingContext2D} ctx - drawing context to which to render
  * @param {number} x - horizontal center of the circle
  * @param {number} y - vertical center of the circle
@@ -151,12 +214,12 @@ function radians(degrees) {
  */
 function drawCircle(ctx, x, y, r) {
   ctx.moveTo(x + r, y);
-  ctx.arc(x, y, r, 0, TAU); 
+  ctx.arc(x, y, r, 0, TAU);
 }
 
 /**
  * polar - Convert polar coordinates to Cartesian x,y.
- * 
+ *
  * @param {number} angle - The angle of the polar offset.
  * @param {number} mag - The magnitude of the polar offset.
  * @return {Object} - with properties x & y.
@@ -8230,7 +8293,7 @@ function rbi(magnitude) {
  * @param {Array} collection - the set of items from which to choose.
  * @return {Any} - the chosen item.
  */
-function choose(collection) {
+function choose$1(collection) {
   return collection[rri(0, collection.length - 1)];
 }
 
@@ -8693,6 +8756,145 @@ const createFrame = (ctx, x, y, frameWidth, frameHeight) => {
 
   return new Frame(ctx, x, y, frameWidth, frameHeight);
 };
+
+/*
+  Some functions for facilitating easy manipulation of SVG path data.
+  processPath takes an SVG path string (`<path d="THE STUFF IN HERE">`)
+  and parses out all the numeric values, so they can be processed/
+  massaged/tweaked/wobbled by an arbitrary callback function, then
+  the path data string is returned with the new values replacing the old.
+*/
+
+const TOKEN = '<>';
+
+/**
+ * @param {string} svgPathData
+ * @return {Array<number>}
+ */
+function _getValuesFromPathData(svgPathData) {
+  const matches = [...svgPathData.matchAll(/[0-9.]+/g)];
+  return matches.map((match) => Number(match[0]));
+}
+
+/**
+ * Replace all the numbers with a token so later
+ * we can come back and replace them in order.
+ * @param {string} svgPathData
+ * @return {string}
+ */
+function _tokenizePathData(svgPathData) {
+  return svgPathData.replaceAll(/[0-9.]+/g, TOKEN);
+}
+
+/**
+ * @param {Array<number>} values
+ * @param {number} [digits]
+ * @param {Function} callback - function to process the values.
+ * @return {Array<string>}
+ */
+function _processValues(values, digits = 6, callback) {
+  let newValues = values;
+  if (callback) {
+    newValues = newValues.map((value, index, list) => {
+      return callback(value, index, list);
+    });
+  }
+  // Limit precision:
+  return newValues.map((value) => Number(value).toPrecision(digits));
+}
+
+function _recreatePathData(pathData, newValues) {
+  let path = _tokenizePathData(pathData);
+  newValues.forEach((value) => {
+    path = path.replace(TOKEN, value);
+  });
+  return path;
+}
+/**
+ * @param {string} origPathData
+ * @param {number} digits - max precision of numbers at the end of the process.
+ * @param {Function} processingFunction - callback to process the values
+ */
+function processPath(origPathData, digits = 6, processingFunction) {
+  const values = _getValuesFromPathData(origPathData);
+  const newValues = _processValues(values, digits, processingFunction);
+  return _recreatePathData(origPathData, newValues);
+}
+
+/*
+Usage with HTML canvas:
+
+  const origPathData = 'M250.137912,0.1171875 C250.137912,166.783854 333.466918,250.117188 500.124931,250.117188';
+
+  const newPathData = processPath(
+    origPathData,
+    4,
+    (val, i, list) => val / 5 + Math.random() * 10 - 5
+  );
+
+  ctx.strokeStyle = '#3c8';
+  ctx.lineWidth = 4;
+  ctx.stroke(newPathData);
+*/
+
+/**
+ * @param {number} segments - number of sides for the polygon
+ * @return {Polygon}
+ */
+function createPolygon(numSegments = 8) {
+
+  /**
+   * @param {number} [segments] - number of sides for the polygon
+   */
+  class Polygon {
+    constructor(numSegments) {
+      let angle, mag;
+      this.numSegments = numSegments;
+      this.points = [];
+      this.pointJitter = [];
+      for(let seg = 0; seg < this.numSegments; seg++) {
+        angle = (TAU / this.numSegments) * seg;
+        this.points.push({
+          x: Math.sin(angle),
+          y: Math.cos(angle)
+        });
+        angle = rr(0, 360);
+        mag = rr(0, 1);
+        this.pointJitter.push({
+          x: Math.sin(angle) * mag,
+          y: Math.cos(angle) * mag
+        });
+      }
+    }
+
+    render(ctx, options) {
+      const { x, y, radius, jitter, angle } = options;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.beginPath();
+      ctx.moveTo(
+        radius * (this.points[0].x + (this.pointJitter[0].x * jitter)),
+        radius * (this.points[0].y + (this.pointJitter[0].y * jitter))
+      );
+      for (let seg = 1; seg < this.numSegments; seg++) {
+        ctx.lineTo(
+          radius * (this.points[seg].x + (this.pointJitter[seg].x * jitter)),
+          radius * (this.points[seg].y + (this.pointJitter[seg].y * jitter))
+        );
+      }
+      ctx.lineTo(
+        radius * (this.points[0].x + (this.pointJitter[0].x * jitter)),
+        radius * (this.points[0].y + (this.pointJitter[0].y * jitter))
+      );
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  return new Polygon(numSegments);
+}
 
 // This file is autogenerated. It's used to publish ESM to npm.
 function _typeof(obj) {
@@ -10055,13 +10257,13 @@ const palettes = {
 
 /**
  * Calculate time-based offsets for running animations
- * 
+ *
  * @param frameRate - desired frames per second of the sketch
  * @param timestamp - the current time in millis
  * @return {Object} - millis since start, seconds since start, frameNum,
  *                    newFrame (is it a new whole-number frame since last time?),
  *                    delta: millis since last call
- */ 
+ */
 function timing(frameRate, timestamp) {
   const millisPerFrame = 1000 / frameRate;
   if (timing.start === undefined) {
@@ -10082,13 +10284,13 @@ function timing(frameRate, timestamp) {
 
 /**
  * Return the sine of the current time in seconds.
- * 
+ *
  * @param {number} freq - cycles per second to which to scale the period
  * @param {number} phase - cycle offset in radians
  * @param {number} mul - scale factor for the resultant value
  * @param {number} add - offset for t he resultant value
  * @return {number}
- */ 
+ */
 function cycle(freq = 1, phase = 0, mul = 1, add = 0) {
   const elapsed = (Date.now() / 1000);
   return Math.sin(elapsed * freq + phase) * mul + add;
@@ -10100,40 +10302,109 @@ function times(repeats = 3, callback) {
   }
 }
 
+/**
+ * Given a frame, dimensions, and a callback function,
+ * execute the callback given the x & y coordinates in the frame.
+ *
+ * @param {CanvasRenderingContext2D} context
+ * @param {Object}   options
+ * @param {Object}   options.frame    The rectangle across which items will span
+ * @param {Number}   options.xfit     # of items across
+ * @param {Number}   options.yfit     # of items up & down
+ * @param {Number}   options.minScale
+ * @param {Number}   options.maxScale
+ * @param {Number}   options.angleMultiple - constraint for rotational angles
+ * @param {Function} options.drawingFunction function to execute on every x,y
+ * @param {Object}   renderOptions - options to be passed to the rendering function.
+ */
+function grid(context, options, renderOptions) {
+  const ctx = context;
+  const { xfit, yfit, drawingFunction, margin, wobble, angles } = options;
+  const frame = options.frame || createFrame(ctx);
+  const minScale = options.minScale || 1;
+  const maxScale = options.maxScale || 1;
+  const xmul = frame.width / xfit;
+  const ymul = frame.height / yfit;
+  const wob = wobble * frame.width;
+  const rotationModule = Math.PI * 2 / angles;
+  ctx.save();
+  ctx.translate(frame.x, frame.y);
+  let index = 0;
+  for (let y = 0; y < yfit; y += 1) {
+    for (let x = 0; x < xfit; x += 1) {
+      index += 1;
+      if (coin(options.probability)) {
+        const scale = rr(minScale, maxScale);
+        const newFrame = createFrame(
+            ctx,
+            x * xmul + rb(wob),
+            y * ymul + rb(wob),
+            xmul,
+            ymul,
+        ).insetRel(margin);
+        const newOpts = Object.assign(
+            {},
+            renderOptions,
+            { frame: newFrame, column: x, row: y, index },
+        );
+        ctx.save();
+        ctx.translate(xmul / 2, ymul / 2);
+        ctx.rotate(Math.floor(rr(angles)) * rotationModule);
+        ctx.scale(scale, scale);
+        ctx.translate(0 - xmul / 2, 0 - ymul / 2);
+        drawingFunction(ctx, newOpts);
+        ctx.restore();
+      }
+    }
+  }
+  ctx.restore();
+}
+
 /* ====================================================== *
 
    sketchlib
 
-   Drawing functions and utilities for working with 
+   Drawing functions and utilities for working with
    HTML canvas
 
  * ====================================================== */
 
 var main = {
   qs,
-  qsa, 
+  qsa,
   whenReady,
-  prepareSketch, 
+  prepareSketch,
+  saveImage,
   drawBackground,
-  PI, 
+  PI,
   TAU,
   radians,
-  polar, 
+  polar,
   drawCircle,
   createFrame,
+  processPath,
+  createPolygon,
   tint,
   shade,
   palettes,
   timing,
   cycle,
+  grid,
   times,
   setSeed,
+  rawTime,
+  sum,
+  constrain,
+  constrainWrap,
+  rawTime,
+  padNum,
+  chooseKey,
   rr,
   rri,
   rrq,
   rb,
   rbi,
-  choose,
+  choose: choose$1,
   coin,
   wobble,
   shuffle

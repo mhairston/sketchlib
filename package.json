@@ -1,6 +1,6 @@
 {
   "name": "sketchlib",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Functions for working with HTML canvas in vanilla JS",
   "main": "dist/sketchlib.min.js",
   "type": "module",

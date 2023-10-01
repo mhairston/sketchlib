@@ -40,3 +40,10 @@ function drawSketch() {
 }
 
 ```
+
+## Contributing
+
+`yarn install`
+
+`yarn build`
+

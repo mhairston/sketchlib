@@ -30,145 +30,153 @@ export const shade = function(col, amt) {
   return tinycolor(col).darken(amt).toHexString();
 };
 
-export const palettes = {
-  default: {
-    background: '#404',
-    primary: '#909',
-    secondary: '#070',
-    tertiary: '#6c6',
-  },
+// Fixed names for first four colors of each palette (legacy, optional):
+export const PAL = Object.freeze({
+  BACKGROUND: 0,
+  PRIMARY: 1,
+  SECONDARY: 2,
+  TERTIARY: 3
+});
 
-  darkSlush: {
-    background: '#000000',
-    primary: '#0F6292',
-    secondary: '#16FF00',
-    tertiary: '#FFED00'
-  },
+export const palettes = Object.freeze({
+  default: [
+    '#404',
+    '#909',
+    '#070',
+    '#6c6',
+  ],
 
-  warmier: {
-    background: '#400E32',
-    primary: '#A61F69',
-    secondary: '#F2921D',
-    tertiary: '#F2CD5C'
-  },
+  darkSlush: [
+    '#000000',
+    '#0F6292',
+    '#16FF00',
+    '#FFED00'
+  ],
 
-  brightWinter: {
-    background: '#FC7300',
-    primary: '#BFDB38',
-    secondary: '#1F8A70',
-    tertiary: '#00425A'
-  },
+  warmier: [
+    '#400E32',
+    '#A61F69',
+    '#F2921D',
+    '#F2CD5C'
+  ],
 
-  camoflage: {
-    background: '#5F7161',
-    primary: '#6D8B74',
-    secondary: '#EFEAD8',
-    tertiary: '#D0C9C0'
-  },
+  brightWinter: [
+    '#FC7300',
+    '#BFDB38',
+    '#1F8A70',
+    '#00425A'
+  ],
 
-  corvetteSummer: {
-    background: '#900C27',
-    primary: '#C70039',
-    secondary: '#F6C667',
-    tertiary: '#F1F8FD'
-  },
+  camoflage: [
+    '#5F7161',
+    '#6D8B74',
+    '#EFEAD8',
+    '#D0C9C0'
+  ],
 
-  taffy: {
-    background: '#824C96',
-    primary: '#433466',
-    secondary: '#FFAF4F',
-    tertiary: '#ED733F'
-  },
+  corvetteSummer: [
+    '#900C27',
+    '#C70039',
+    '#F6C667',
+    '#F1F8FD'
+  ],
 
-  airSeaBattle: {
-    background: '#92E6E6',
-    primary: '#FFF9AF',
-    secondary: '#D65D7A',
-    tertiary: '#524C84'
-  },
+  taffy: [
+    '#824C96',
+    '#433466',
+    '#FFAF4F',
+    '#ED733F'
+  ],
 
-  battleshipCreamsicle: {
-    background: '#85A392',
-    primary: '#F5B971',
-    secondary: '#FDD998',
-    tertiary: '#FFECC7'
-  },
+  airSeaBattle: [
+    '#92E6E6',
+    '#FFF9AF',
+    '#D65D7A',
+    '#524C84'
+  ],
 
-  caffeine: {
-    background: '#F1DEC9',
-    primary: '#C8B6A6',
-    secondary: '#A4907C',
-    tertiary: '#8D7B68'
-  },
+  battleshipCreamsicle: [
+    '#85A392',
+    '#F5B971',
+    '#FDD998',
+    '#FFECC7'
+  ],
 
-  cool2600: {
-    background: '#191825',
-    primary: '#865DFF',
-    secondary: '#E384FF',
-    tertiary: '#FFA3FD'
-  },
+  caffeine: [
+    '#F1DEC9',
+    '#C8B6A6',
+    '#A4907C',
+    '#8D7B68'
+  ],
 
-  turtle: {
-    background: '#F7F1E5',
-    primary: '#E7B10A',
-    secondary: '#898121',
-    tertiary: '#4C4B16'
-  },
+  cool2600: [
+    '#191825',
+    '#865DFF',
+    '#E384FF',
+    '#FFA3FD'
+  ],
 
-  primarilyBrilliant: {
-    background: '#00235B',
-    primary: '#E21818',
-    secondary: '#FFDD83',
-    tertiary: '#98DFD6'
-  },
+  turtle: [
+    '#F7F1E5',
+    '#E7B10A',
+    '#898121',
+    '#4C4B16'
+  ],
 
-  natureAndSherbet: {
-    background: '#7AA874',
-    primary: '#F7DB6A',
-    secondary: '#EBB02D',
-    tertiary: '#D864A9'
-  },
+  primarilyBrilliant: [
+    '#00235B',
+    '#E21818',
+    '#FFDD83',
+    '#98DFD6'
+  ],
 
-  level99: {
-    background: '#F67280',
-    primary: '#C06C84',
-    secondary: '#6C5B7B',
-    tertiary: '#355C7D'
-  },
+  natureAndSherbet: [
+    '#7AA874',
+    '#F7DB6A',
+    '#EBB02D',
+    '#D864A9'
+  ],
 
-  armyJeep: {
-    background: '#61764B',
-    primary: '#9BA17B',
-    secondary: '#CFB997',
-    tertiary: '#CFB997'
-  },
+  level99: [
+    '#F67280',
+    '#C06C84',
+    '#6C5B7B',
+    '#355C7D'
+  ],
 
-  safetyThird: {
-    background: '#F97B22',
-    primary: '#FEE8B0',
-    secondary: '#9CA777',
-    tertiary: '#FAD6A5'
-  },
+  armyJeep: [
+    '#61764B',
+    '#9BA17B',
+    '#CFB997',
+    '#CFB997'
+  ],
 
-  coolNeutral: {
-    background: '#A6D0DD',
-    primary: '#FF6969',
-    secondary: '#FFD3B0',
-    tertiary: '#FFF9DE'
-  },
+  safetyThird: [
+    '#F97B22',
+    '#FEE8B0',
+    '#9CA777',
+    '#FAD6A5'
+  ],
 
-  altCrayola: {
-    background: '#89375F',
-    primary: '#CE5959',
-    secondary: '#BACDDB',
-    tertiary: '#F3E8FF'
-  },
+  coolNeutral: [
+    '#A6D0DD',
+    '#FF6969',
+    '#FFD3B0',
+    '#FFF9DE'
+  ],
 
-  icicle: {
-    background: '#453C67',
-    primary: '#6D67E4',
-    secondary: '#46C2CB',
-    tertiary: '#F2F7A1'
-  }
-};
+  altCrayola: [
+    '#89375F',
+    '#CE5959',
+    '#BACDDB',
+    '#F3E8FF'
+  ],
+
+  icicle: [
+    '#453C67',
+    '#6D67E4',
+    '#46C2CB',
+    '#F2F7A1'
+  ]
+});
 

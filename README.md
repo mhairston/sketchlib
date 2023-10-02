@@ -13,30 +13,31 @@ whenReady(() => {
   sketch = prepareSketch({
     title: 'My Sketch',
     canvasId: 'mycanvas',
-    cw: 800,
-    ch: 600,
-    pal: {
-      background: '#404',
-      primary: '#fc7',
-      secondary: '#8ba'
-    }
+    canvasWidth: 800,
+    canvasHeight: 600,
+    pal: [
+      '#404',
+      '#fc7',
+      '#8ba',
+      '#222'
+    ]
   });
   ctx = sketch.ctx;
   drawSketch();
 });
 
-const { cw, ch, hw, hh, ctx, pal } = sketch;
+const { canvasWidth, canvasHeight, hw, hh, ctx, pal } = sketch;
 
 function drawSketch() {
-  lib.background(sketch);
-  ctx.fillStyle = pal.primary;
+  lib.background(ctx, pal[0]);
+  ctx.fillStyle = pal[1];
   ctx.beginPath();
   ctx.moveTo(hw, 0);
-  ctx.lineTo(cw, hh);
-  ctx.lineTo(hw, ch);
+  ctx.lineTo(canvasWidth, hh);
+  ctx.lineTo(hw, canvasHeight);
   ctx.lineTo(0, hh);
   ctx.closePath();
-  ctxfill();
+  ctx.fill();
 }
 
 ```
@@ -46,4 +47,13 @@ function drawSketch() {
 `yarn install`
 
 `yarn build`
+
+
+## TODO
+
+* Reduce the overall size of the library by including less dependency code.
+* Add a demo sketch.
+* Update the sample code above.
+* Make createSketch private, move contents of initSketch into prepareSketch.
+* Add keywords to package.json
 

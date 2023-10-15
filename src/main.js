@@ -8,7 +8,7 @@
  * ====================================================== */
 
 import { prepareSketch, drawBackground, saveImage } from './canvas.js';
-import { PI, TAU, radians, drawCircle, polar } from './geo.js';
+import { PI, TAU, radians, drawCircle, circle, polar } from './geo.js';
 import { createFrame } from './Frame.js';
 import { processPath } from './path.js';
 import { createPolygon } from './Polygon.js';
@@ -53,6 +53,7 @@ export default {
   radians,
   polar,
   drawCircle,
+  circle,
   createFrame,
   processPath,
   createPolygon,

@@ -9,6 +9,13 @@ const createPalette = (colors) => {
       this.colors = colors;
     }
 
+    /**
+     * Normalize the color strings to start with '#'.
+     * This makes the '#' optional when creating the palette.
+     *
+     * @param {Array<String>} colors - Hex colors to add '#' if needed.
+     * @returns {Array<String>} - The collection of normalized colors.
+     */
     static normalizeColorStrings(colors) {
       colors.forEach((col) => {
         if (!col.startsWith('#')) {

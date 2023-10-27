@@ -8,8 +8,7 @@ import tinycolor from 'tinycolor2';
 
    TODO:
 
-   - A façade for tinycolor2 and a
-     wrapper object for that color format
+   - A façade for some tinycolor2 functions
    - An opinionated, standard palette format:
      - HSB; alpha is NOT included in color definitions.
      - Each color has hue, saturation, and a default

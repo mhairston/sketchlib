@@ -1,6 +1,6 @@
 {
   "name": "sketchlib",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "Functions for working with HTML canvas in vanilla JS",
   "main": "dist/sketchlib.min.js",
   "type": "module",
@@ -10,7 +10,7 @@
   "private": false,
   "dependencies": {
     "@sunify/lerp-color": "^2.0.0",
-    "chance": "^1.1.11",
+    "best-random": "^1.0.3",
     "tinycolor2": "^1.6.0"
   },
   "devDependencies": {

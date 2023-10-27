@@ -5,18 +5,16 @@
    Randomization functions
 
  * ====================================================== */
+import { Random } from 'best-random';
 
-import Chance from 'chance';
+let rando = new Random(0);
 
-let _chance = Chance();
-
-// TODO: test this.
 function setSeed(seed) {
-  _chance = new Chance(seed);
+  rando = new Random(seed);
 }
 
 function _randomFloat() {
-  return _chance.floating({ min: 0, max: 1, fixed: 8 });
+  return rando.float64();
 }
 
 /**

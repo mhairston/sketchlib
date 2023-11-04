@@ -18,9 +18,9 @@
 function timing(frameRate, timestamp) {
   const millisPerFrame = 1000 / frameRate;
   if (timing.start === undefined) {
-    timestamp = Date.now();
+    timestamp = performance.now();
     timing.start = timestamp;
-    timing.prevTimestamp = 0;
+    timing.prevTimestamp = -1;
     timing.prevFrameNum = -1;
   }
   const millis = timestamp - timing.start;

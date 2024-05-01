@@ -1,7 +1,7 @@
 import { choose, rb } from './random.js';
 import { TAU } from './geo.js';
 import { times } from './time.js';
-import { processPath } form './path.js';
+import { processPath } from './path.js';
 import { numbers } from './numbers.js';
 
 /**

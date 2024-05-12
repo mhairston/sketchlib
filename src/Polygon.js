@@ -2,16 +2,15 @@ import { TAU } from './geo.js';
 import { rr } from './random';
 
 /**
- * @param {number} segments - number of sides for the polygon
+ * @param {number} numSegments - number of sides for the polygon
  * @return {Polygon}
  */
 export function createPolygon(numSegments = 8) {
-
   /**
-   * @param {number} [segments] - number of sides for the polygon
+   * @param {number} [numSegments] - number of sides for the polygon
    */
   class Polygon {
-    constructor(numSegments) {
+    constructor(numSegments = 6) {
       let angle, mag;
       this.numSegments = numSegments;
       this.points = [];
@@ -31,6 +30,17 @@ export function createPolygon(numSegments = 8) {
       }
     }
 
+    /**
+     * Draw the polygon
+     *
+     * @param {CanvasRenderingContext2D} ctx - rendering context
+     * @parm {Object} options
+     * @param {} options.x - horizontal location of render
+     * @param {} options.y - vertical location of render
+     * @param {} options.radius - radius at which to render the polygon
+     * @param {} options.jitter - amount to wobble each point in two dimensions
+     * @param {} options.angle - amount to rotate the polygon
+     */
     render(ctx, options) {
       const { x, y, radius, jitter, angle } = options;
       ctx.save();

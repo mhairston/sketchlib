@@ -7,14 +7,14 @@ This is a very early version. Expect to see panels askew and wires coming out of
 ```javascript
 import lib from 'path/to/sketchlib/main.js';
 
+
+
 let sketch, ctx;
 
-whenReady(() => {
-  sketch = prepareSketch({
+lib.whenReady(() => {  
+  sketch = lib.prepareSketch({
     title: 'My Sketch',
     canvasId: 'mycanvas',
-    canvasWidth: 800,
-    canvasHeight: 600,
     pal: [
       '#404',
       '#fc7',
@@ -26,10 +26,10 @@ whenReady(() => {
   drawSketch();
 });
 
-const { canvasWidth, canvasHeight, hw, hh, ctx, pal } = sketch;
-
 function drawSketch() {
-  lib.background(ctx, pal[0]);
+  const { canvasWidth, canvasHeight, hw, hh, ctx, pal } = sketch;
+  
+  lib.drawBackground(ctx, pal[0]);
   ctx.fillStyle = pal[1];
   ctx.beginPath();
   ctx.moveTo(hw, 0);
@@ -39,7 +39,6 @@ function drawSketch() {
   ctx.closePath();
   ctx.fill();
 }
-
 ```
 
 ## Contributing

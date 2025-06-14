@@ -1,13 +1,12 @@
 {
   "name": "sketchlib",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Functions for working with HTML canvas in vanilla JS",
   "main": "dist/sketchlib.min.js",
   "type": "module",
   "repository": "https://github.com/mhairston/sketchlib",
   "author": "Michael Hairston",
   "license": "MIT",
-  "private": false,
   "dependencies": {
     "@sunify/lerp-color": "^2.0.0",
     "best-random": "^1.0.3",
@@ -23,5 +22,6 @@
   "scripts": {
     "build": "rollup --config",
     "watch": "rollup -cw"
-  }
+  },
+  "packageManager": "yarn@4.9.2"
 }
